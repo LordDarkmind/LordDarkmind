@@ -1,0 +1,11 @@
+[19:52:33] [Server thread/WARN]: [BedWars] Task #26 for BedWars v1.0 generated an exception
+java.lang.NullPointerException
+	at de.niklas409.bw.main.Scoreboard.updateScoreboardIngame(Scoreboard.java:352) ~[?:?]
+	at de.niklas409.bw.main.Main$4.run(Main.java:218) ~[?:?]
+	at org.bukkit.craftbukkit.v1_8_R3.scheduler.CraftTask.run(CraftTask.java:71) ~[spigot-1.8.8.jar:git-Spigot-db6de12-18fbb24]
+	at org.bukkit.craftbukkit.v1_8_R3.scheduler.CraftScheduler.mainThreadHeartbeat(CraftScheduler.java:350) [spigot-1.8.8.jar:git-Spigot-db6de12-18fbb24]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.B(MinecraftServer.java:723) [spigot-1.8.8.jar:git-Spigot-db6de12-18fbb24]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.B(DedicatedServer.java:374) [spigot-1.8.8.jar:git-Spigot-db6de12-18fbb24]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.A(MinecraftServer.java:654) [spigot-1.8.8.jar:git-Spigot-db6de12-18fbb24]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:557) [spigot-1.8.8.jar:git-Spigot-db6de12-18fbb24]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_211]
