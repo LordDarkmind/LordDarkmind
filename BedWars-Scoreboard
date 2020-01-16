@@ -1,0 +1,587 @@
+package de.niklas409.bw.main;
+
+import java.io.File;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Team;
+
+import de.niklas409.bw.game.Mainlistener;
+import de.niklas409.bw.game.TeamManager;
+
+public class Scoreboard {
+
+	public static File SB = new File("plugins/BedWars/ScoreboardLobby.yml");
+	public static YamlConfiguration ySB = YamlConfiguration.loadConfiguration(SB);
+	
+	public static void SetScoreboardLobby(Player p, Plugin pl) {
+		
+		org.bukkit.scoreboard.Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+		
+		Objective obj = board.registerNewObjective("bw", "dummy");
+		
+		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+		obj.setDisplayName("§6•§e● CaveMC §8┃ §7BedWars");
+		
+		Team Line9 = board.registerNewTeam("line9");
+		Team Line8 = board.registerNewTeam("line8");
+		Team Line7 = board.registerNewTeam("line7");
+		Team Line6 = board.registerNewTeam("line6");
+		Team Line5 = board.registerNewTeam("line5");
+		Team Line4 = board.registerNewTeam("line4");
+		Team Line3 = board.registerNewTeam("line3");
+		Team Line2 = board.registerNewTeam("line2");
+		Team Line1 = board.registerNewTeam("line1");
+		Team Line0 = board.registerNewTeam("line0");
+		
+		if(!ySB.getString("Line9").contains("%NULL%")) {
+			obj.getScore("§3").setScore(9);
+			Line9.addEntry("§3");
+			Line9.setPrefix("§8┃");
+		}
+		if(!ySB.getString("Line8").contains("%NULL%")) {
+			obj.getScore("§4").setScore(8);
+			Line8.addEntry("§4");
+			Line8.setPrefix("§8┃ §7Spielart");
+		}
+		if(!ySB.getString("Line7").contains("%NULL%")) {
+			obj.getScore("§5").setScore(7);
+			Line7.addEntry("§5");
+			Line7.setPrefix("§8┃ » " + replaceall(ySB.getString("Line7"), pl));
+		}
+		if(!ySB.getString("Line6").contains("%NULL%")) {
+			obj.getScore("§6").setScore(6);
+			Line6.addEntry("§6");
+			Line6.setPrefix("§8┃§a");
+		}
+		if(!ySB.getString("Line5").contains("%NULL%")) {
+			obj.getScore("§7").setScore(5);
+			Line5.addEntry("§7");
+			Line5.setPrefix("§8┃ §7Karte");
+		}
+		if(!ySB.getString("Line4").contains("%NULL%")) {
+			obj.getScore("§8").setScore(4);
+			Line4.addEntry("§8");
+			Line4.setPrefix("§8┃ » §b" + replaceall(ySB.getString("Line4"), pl));
+		}
+		if(!ySB.getString("Line3").contains("%NULL%")) {
+			obj.getScore("§0").setScore(3);
+			Line3.addEntry("§0");
+			Line3.setPrefix("§8┃§b");
+		}
+		if(!ySB.getString("Line2").contains("%NULL%")) {
+			obj.getScore("§1§l").setScore(2);
+			Line2.addEntry("§1§l");
+			Line2.setPrefix("§8┃ §7Gold");
+		}
+		if(!ySB.getString("Line1").contains("%NULL%")) {
+			obj.getScore("§2§l").setScore(1);
+			Line1.addEntry("§2§l");
+			Line1.setPrefix("§8┃ » " + replaceall(ySB.getString("Line1"), pl));
+		}
+		if(!ySB.getString("Line0").contains("%NULL%")) {
+			obj.getScore("§3§l").setScore(0);
+			Line0.addEntry("§3§l");
+			Line0.setPrefix("§8┃§c");
+		}
+		
+		p.setScoreboard(board);
+		
+	}
+	
+	public static void SetScoreboardIngame(Player p, Plugin pl) {
+		
+		org.bukkit.scoreboard.Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+		
+		Objective obj = board.registerNewObjective("bw", "dummy");
+		
+		List<String> teamsf = Mainlistener.ySpawn.getStringList("Teamfarben" + " von " + Mainlistener.Map.get(0));
+		
+		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+		obj.setDisplayName("§6•§e● CaveMC §8┃ §7BedWars");
+		
+		Team Blau = board.registerNewTeam("Blau");
+		Team Rot = board.registerNewTeam("Rot");
+		Team Grün = board.registerNewTeam("Grün");
+		Team Gelb = board.registerNewTeam("Gelb");
+		Team Schwarz = board.registerNewTeam("Schwarz");
+		Team Orange = board.registerNewTeam("Orange");
+		Team Türkis = board.registerNewTeam("Türkis");
+		Team Pink = board.registerNewTeam("Pink");
+		
+		Team eins = board.registerNewTeam("eins");
+		Team zwei = board.registerNewTeam("zwei");
+		Team drei = board.registerNewTeam("drei");
+		Team vier = board.registerNewTeam("vier");
+		
+		obj.getScore("§l ").setScore(Mainlistener.teilnehmer.size()+1);
+		eins.addEntry("§l ");
+		eins.setPrefix("§l ");
+		
+		if(teamsf.contains("Blau")) {
+			if(Mainlistener.betten.contains("Blau")) {
+				
+				obj.getScore("§1").setScore(TeamManager.Blau.size());
+				Blau.addEntry("§1");
+				Blau.setPrefix("§a✔ §1Blau");
+				
+			} else {
+				
+				obj.getScore("§1").setScore(TeamManager.Blau.size());
+				Blau.addEntry("§1");
+				Blau.setPrefix("§c✖ §1Blau");
+				
+			}
+		}
+		if(teamsf.contains("Rot")) {
+			if(Mainlistener.betten.contains("Rot")) {
+				
+				obj.getScore("§4").setScore(TeamManager.Rot.size());
+				Rot.addEntry("§4");
+				Rot.setPrefix("§a✔ §4Rot");
+				
+			} else {
+				
+				obj.getScore("§4").setScore(TeamManager.Rot.size());
+				Rot.addEntry("§4");
+				Rot.setPrefix("§c✖ §4Rot");
+				
+			}
+		}
+		if(teamsf.contains("Grün")) {
+			if(Mainlistener.betten.contains("Grün")) {
+				
+				obj.getScore("§a").setScore(TeamManager.Grün.size());
+				Grün.addEntry("§a");
+				Grün.setPrefix("§a✔ §aGrün");
+				
+			} else {
+				
+				obj.getScore("§a").setScore(TeamManager.Grün.size());
+				Grün.addEntry("§a");
+				Grün.setPrefix("§c✖ §aGrün");
+				
+			}
+		}
+		if(teamsf.contains("Gelb")) {
+			if(Mainlistener.betten.contains("Gelb")) {
+				
+				obj.getScore("§e").setScore(TeamManager.Gelb.size());
+				Gelb.addEntry("§e");
+				Gelb.setPrefix("§a✔ §eGelb");
+				
+			} else {
+				
+				obj.getScore("§e").setScore(TeamManager.Gelb.size());
+				Gelb.addEntry("§e");
+				Gelb.setPrefix("§c✖ §eGelb");
+				
+			}
+		}
+		if(teamsf.contains("Schwarz")) {
+			if(Mainlistener.betten.contains("Schwarz")) {
+				
+				obj.getScore("§0").setScore(TeamManager.Schwarz.size());
+				Schwarz.addEntry("§0");
+				Schwarz.setPrefix("§a✔ §0Schwarz");
+				
+			} else {
+				
+				obj.getScore("§0").setScore(TeamManager.Schwarz.size());
+				Schwarz.addEntry("§0");
+				Schwarz.setPrefix("§c✖ §0Schwarz");
+				
+			}
+		}
+		if(teamsf.contains("Orange")) {
+			if(Mainlistener.betten.contains("Orange")) {
+				
+				obj.getScore("§6").setScore(TeamManager.Orange.size());
+				Orange.addEntry("§6");
+				Orange.setPrefix("§a✔ §6Orange");
+				
+			} else {
+				
+				obj.getScore("§6").setScore(TeamManager.Orange.size());
+				Orange.addEntry("§6");
+				Orange.setPrefix("§c✖ §6Orange");
+				
+			}
+		}
+		if(teamsf.contains("Türkis")) {
+			if(Mainlistener.betten.contains("Türkis")) {
+				
+				obj.getScore("§b").setScore(TeamManager.Türkis.size());
+				Türkis.addEntry("§b");
+				Türkis.setPrefix("§a✔ §bTürkis");
+				
+			} else {
+				
+				obj.getScore("§b").setScore(TeamManager.Türkis.size());
+				Türkis.addEntry("§b");
+				Türkis.setPrefix("§c✖ §bTürkis");
+				
+			}
+		}
+		if(teamsf.contains("Pink")) {
+			if(Mainlistener.betten.contains("Pink")) {
+				
+				obj.getScore("§d").setScore(TeamManager.Pink.size());
+				Pink.addEntry("§d");
+				Pink.setPrefix("§a✔ §dPink");
+				
+			} else {
+				
+				obj.getScore("§d").setScore(TeamManager.Pink.size());
+				Pink.addEntry("§d");
+				Pink.setPrefix("§c✖ §dPink");
+				
+			}
+		}
+		
+		obj.getScore("§2").setScore(-1);
+		zwei.addEntry("§2");
+		zwei.setPrefix("§2 ");
+		
+		obj.getScore("§f").setScore(-2);
+		drei.addEntry("§f");
+		drei.setPrefix("§fGold:");
+		
+		 String gold = null;
+
+		 if(Mainlistener.Gold == true) {
+			 
+			 gold = "§aAn";
+			 
+		 } else if(Mainlistener.Gold == false) {
+			 
+			 gold = "§cAus";
+			 
+		 }
+		
+		obj.getScore("§6§l").setScore(-3);
+		vier.addEntry("§6§l");
+		vier.setPrefix(gold);
+		
+		p.setScoreboard(board);
+		
+	}
+	
+	public static void updateScoreboardLobby(Player p, Plugin pl) {
+		if(p.getScoreboard() == null) {
+			
+			SetScoreboardLobby(p, pl);
+			
+		} else {
+			
+			org.bukkit.scoreboard.Scoreboard board = p.getScoreboard();
+
+			Team Line9 = board.getTeam("line9");
+			Team Line8 = board.getTeam("line8");
+			Team Line7 = board.getTeam("line7");
+			Team Line6 = board.getTeam("line6");
+			Team Line5 = board.getTeam("line5");
+			Team Line4 = board.getTeam("line4");
+			Team Line3 = board.getTeam("line3");
+			Team Line2 = board.getTeam("line2");
+			Team Line1 = board.getTeam("line1");
+			Team Line0 = board.getTeam("line0");
+
+			if(!ySB.getString("Line9").contains("%NULL%")) {
+				Line9.setPrefix("§8┃");
+			}
+			if(!ySB.getString("Line8").contains("%NULL%")) {
+				Line8.setPrefix("§8┃ §7Spielart");
+			}
+			if(!ySB.getString("Line7").contains("%NULL%")) {
+				Line7.setPrefix("§8┃ » " + replaceall(ySB.getString("Line7"), pl));
+			}
+			if(!ySB.getString("Line6").contains("%NULL%")) {
+				Line6.setPrefix("§8┃§a");
+			}
+			if(!ySB.getString("Line5").contains("%NULL%")) {
+				Line5.setPrefix("§8┃ §7Karte");
+			}
+			if(!ySB.getString("Line4").contains("%NULL%")) {
+				Line4.setPrefix("§8┃ » §b" + replaceall(ySB.getString("Line4"), pl));
+			}
+			if(!ySB.getString("Line3").contains("%NULL%")) {
+				Line3.setPrefix("§8┃§b");
+			}
+			if(!ySB.getString("Line2").contains("%NULL%")) {
+				Line2.setPrefix("§8┃ §7Gold");
+			}
+			if(!ySB.getString("Line1").contains("%NULL%")) {
+				Line1.setPrefix("§8┃ » " + replaceall(ySB.getString("Line1"), pl));
+			}
+			if(!ySB.getString("Line0").contains("%NULL%")) {
+				Line0.setPrefix("§8┃§c");
+			}
+			
+		}
+	}
+	
+	public static void updateScoreboardIngame(Player p, Plugin pl) {
+		if(p.getScoreboard() == null) {
+			SetScoreboardIngame(p, pl);
+		} else {
+			
+			List<String> teamsf = Mainlistener.ySpawn.getStringList("Teamfarben" + " von " + Mainlistener.Map.get(0));
+			
+			org.bukkit.scoreboard.Scoreboard board = p.getScoreboard();
+			
+			Team Blau = board.getTeam("Blau");
+			Team Rot = board.getTeam("Rot");
+			Team Grün = board.getTeam("Grün");
+			Team Gelb = board.getTeam("Gelb");
+			Team Schwarz = board.getTeam("Schwarz");
+			Team Orange = board.getTeam("Orange");
+			Team Türkis = board.getTeam("Türkis");
+			Team Pink = board.getTeam("Pink");
+			
+			Team eins = board.getTeam("§8┃§a");
+			Team zwei = board.getTeam("§8┃§b");
+			Team drei = board.getTeam("§8┃ §7Gold");
+			Team vier = board.getTeam("gold");
+			
+			eins.setPrefix("§8┃§a");
+			
+			if(teamsf.contains("Blau")) {
+				if(Mainlistener.betten.contains("Blau")) {
+
+					Blau.setPrefix("§a✔ §1Blau");
+					
+				} else {
+
+					Blau.setPrefix("§c✖ §1Blau");
+					
+				}
+			}
+			if(teamsf.contains("Rot")) {
+				if(Mainlistener.betten.contains("Rot")) {
+
+					Rot.setPrefix("§a✔ §cRot");
+					
+				} else {
+					
+					Rot.setPrefix("§c✖ §cRot");
+					
+				}
+			}
+			if(teamsf.contains("Grün")) {
+				if(Mainlistener.betten.contains("Grün")) {
+
+					Grün.setPrefix("§a✔ §aGrün");
+					
+				} else {
+
+					Grün.setPrefix("§c✖ §aGrün");
+					
+				}
+			}
+			if(teamsf.contains("Gelb")) {
+				if(Mainlistener.betten.contains("Gelb")) {
+
+					Gelb.setPrefix("§a✔ §eGelb");
+					
+				} else {
+
+					Gelb.setPrefix("§c✖ §eGelb");
+					
+				}
+			}
+			if(teamsf.contains("Schwarz")) {
+				if(Mainlistener.betten.contains("Schwarz")) {
+
+					Schwarz.setPrefix("§a✔ §0Schwarz");
+					
+				} else {
+
+					Schwarz.setPrefix("§c✖ §0Schwarz");
+					
+				}
+			}
+			if(teamsf.contains("Orange")) {
+				if(Mainlistener.betten.contains("Orange")) {
+
+					Orange.setPrefix("§a✔ §6Orange");
+					
+				} else {
+
+					Orange.setPrefix("§c✖ §6Orange");
+					
+				}
+			}
+			if(teamsf.contains("Türkis")) {
+				if(Mainlistener.betten.contains("Türkis")) {
+
+					Türkis.setPrefix("§a✔ §bTürkis");
+					
+				} else {
+
+					Türkis.setPrefix("§c✖ §bTürkis");
+					
+				}
+			}
+			if(teamsf.contains("Pink")) {
+				if(Mainlistener.betten.contains("Pink")) {
+
+					Pink.setPrefix("§a✔ §dPink");
+					
+				} else {
+
+					Pink.setPrefix("§c✖ §dPink");
+					
+				}
+			}
+
+			zwei.setPrefix("§8┃§b");
+
+			drei.setPrefix("§8┃ §7Gold");
+			
+			 String gold = null;
+
+			 if(Mainlistener.Gold == true) {
+				 
+				 gold = "§aAn";
+				 
+			 } else if(Mainlistener.Gold == false) {
+				 
+				 gold = "§cAus";
+				 
+			 }
+			 
+			vier.setPrefix(gold);
+			
+		}
+	}
+	
+	public static String replaceall(String s, Plugin pl) {
+	
+		 String[] Teamanordnung = pl.getConfig().getString("Config.Teamanordnung").split("x");
+		 String TeamA = Teamanordnung[0];
+		 String SpielerA = Teamanordnung[1];
+		 
+		 String gold = null;
+
+		 if(Mainlistener.GoldOn.size() == Mainlistener.GoldOff.size()) {
+			 
+			 gold = "§7-";
+			 
+		 } else if(Mainlistener.GoldOn.size() > Mainlistener.GoldOff.size()) {
+			 
+			 gold = "§aAn";
+			 
+		 } else if(Mainlistener.GoldOff.size() > Mainlistener.GoldOn.size()) {
+			 
+			 gold = "§cAus";
+			 
+		 }
+		 
+		return s.replace("%map%", Mainlistener.Map.get(0)).replaceAll("%teamanzahl%", TeamA).replaceAll("%teamgröße%", SpielerA).replaceAll("%gold%", gold).replaceAll("&", "§");
+	}
+	
+	public static void setTab(Player p) {
+		if(p.getScoreboard() == null) {
+			
+		} else {
+			
+			org.bukkit.scoreboard.Scoreboard board = p.getScoreboard();
+			
+			Team Blau = board.registerNewTeam("01Blau");
+			Team Rot = board.registerNewTeam("02Rot");
+			Team Grün = board.registerNewTeam("03Grün");
+			Team Gelb = board.registerNewTeam("04Gelb");
+			Team Schwarz = board.registerNewTeam("05Schwarz");
+			Team Orange = board.registerNewTeam("06Orange");
+			Team Türkis = board.registerNewTeam("07Türkis");
+			Team Pink = board.registerNewTeam("08Pink");
+			Team Lobby = board.registerNewTeam("09Lobby");
+			
+			Blau.setPrefix("§1█ §8● §7");
+			Rot.setPrefix("§c█ §8● §7");
+			Grün.setPrefix("§a█ §8● §7");
+			Gelb.setPrefix("§e█ §8● §7");
+			Schwarz.setPrefix("§0█ §8● §7");
+			Orange.setPrefix("§6█ §8● §7");
+			Türkis.setPrefix("§b█ §8● §7");
+			Pink.setPrefix("§d█ §8● §7");
+			Lobby.setPrefix("§4✖ §8● §7");
+			
+			Bukkit.getOnlinePlayers().forEach(all -> {
+				if(TeamManager.Blau.contains(all)) {
+					Blau.addEntry(all.getName());
+				} else if(TeamManager.Rot.contains(all)) {
+					Rot.addEntry(all.getName());
+				} else if(TeamManager.Grün.contains(all)) {
+					Grün.addEntry(all.getName());
+				} else if(TeamManager.Gelb.contains(all)) {
+					Gelb.addEntry(all.getName());
+				} else if(TeamManager.Schwarz.contains(all)) {
+					Schwarz.addEntry(all.getName());
+				} else if(TeamManager.Orange.contains(all)) {
+					Orange.addEntry(all.getName());
+				} else if(TeamManager.Türkis.contains(all)) {
+					Türkis.addEntry(all.getName());
+				} else if(TeamManager.Pink.contains(all)) {
+					Pink.addEntry(all.getName());
+				} else {
+					Lobby.addEntry(all.getName());
+				}
+			});
+		}
+	}
+	
+	public static void updateTab(Player p) {
+		if(p.getScoreboard() == null) {
+			
+		} else {
+			
+			org.bukkit.scoreboard.Scoreboard board = p.getScoreboard();
+			
+			Team Blau = board.getTeam("01Blau");
+			Team Rot = board.getTeam("02Rot");
+			Team Grün = board.getTeam("03Grün");
+			Team Gelb = board.getTeam("04Gelb");
+			Team Schwarz = board.getTeam("05Schwarz");
+			Team Orange = board.getTeam("06Orange");
+			Team Türkis = board.getTeam("07Türkis");
+			Team Pink = board.getTeam("08Pink");
+			Team Lobby = board.getTeam("09Lobby");
+			
+			if(Blau == null || Rot == null || Grün == null || Gelb == null || Schwarz == null || Orange == null || Türkis == null || Pink == null || Lobby == null) {
+				setTab(p);
+				return;
+			}
+			
+			Bukkit.getOnlinePlayers().forEach(all -> {
+				if(TeamManager.Blau.contains(all)) {
+					Blau.addEntry(all.getName());
+				} else if(TeamManager.Rot.contains(all)) {
+					Rot.addEntry(all.getName());
+				} else if(TeamManager.Grün.contains(all)) {
+					Grün.addEntry(all.getName());
+				} else if(TeamManager.Gelb.contains(all)) {
+					Gelb.addEntry(all.getName());
+				} else if(TeamManager.Schwarz.contains(all)) {
+					Schwarz.addEntry(all.getName());
+				} else if(TeamManager.Orange.contains(all)) {
+					Orange.addEntry(all.getName());
+				} else if(TeamManager.Türkis.contains(all)) {
+					Türkis.addEntry(all.getName());
+				} else if(TeamManager.Pink.contains(all)) {
+					Pink.addEntry(all.getName());
+				} else {
+					Lobby.addEntry(all.getName());
+				}
+			});
+			
+		}
+	}
+	
+}
